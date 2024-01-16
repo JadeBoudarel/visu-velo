@@ -19,13 +19,13 @@
             </div>
         </div>
         
-        <div class="text-center bg-info border border-5 border-danger m-auto p-auto"  style="width: 51rem; height: 50rem;">A      </div>
+        <div id="square" class="text-center bg-info border border-5 border-danger m-auto p-auto"  style="width: 51rem; height: 50rem;">A      </div>
         <div class=" d-flex justify-content-evenly p-3">
             
-            <button class="btn btn-lg btn-dark " type="button">Button</button>
-            <button class="btn btn-lg btn-dark " type="button">Button</button>
-            <button class="btn btn-lg btn-dark " type="button">Button</button>
-            <button class="btn btn-lg btn-dark " type="button">Button</button>   
+            <button id="btn1" class="btn btn-lg btn-dark " type="button">Button</button>
+            <button id="2" class="btn btn-lg btn-dark " type="button">Button</button>
+            <button id="3" class="btn btn-lg btn-dark " type="button">Button</button>
+            <button id="4" class="btn btn-lg btn-dark " type="button">Button</button>   
             
             
         </div>
@@ -33,20 +33,35 @@
 
 
 
-      <a href="">a</a>
+    <a href="http://jquery.com/">jQuery</a>
+    <script src="jquery.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+    integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
    
-    <script src="jquery.js"></script>	
-<script>
-
-$( document ).onload(function() {
+   
+   
+   <script>
  
- $( "a" ).click(function( event ) {
+ 
+ $( document ).ready(function() {
+ 
+ $( "#btn1" ).click(function( event ) {
 
-     alert( "Thanks for visiting!" );
+     alert( "hello world" );
+
+     event.preventDefault();
 
  });
-
+ 
 });
+
+
+
+
+
+
     </script>
    
    
