@@ -87,6 +87,7 @@
           type: 'line',
         data: {
             datasets: [{
+              label: 'distance parcourue en Km',
                 data: [{
                         x: "27/11/2022",
                         y: 30
@@ -175,32 +176,8 @@
                 ],
             }],
         },
-        options: {
-            scales: {
-                xAxis: [{
-                    type: 'time',
-                    time: {
-                        unit: 'day',
-                        min: '2022-12-04',
-                        max: '2023-03-20',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    }
-                }],
-                yAxis: [{
-                    title: {
-                        display: true,
-                        text: 'Distance (km)'
-                    },
-                    ticks: {
-                        min: 0,
-                        max: 100
-                    }
-                }]
-            }
-        }
+        
+            
     });
    
 
