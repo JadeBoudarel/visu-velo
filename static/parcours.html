@@ -12,15 +12,16 @@
       </div>
       
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+      
       
 
 
 
       <script>
-        const ctx = document.getElementById('myChart');
+        const ctx = $('#myChart');
       
-        new Chart(ctx, {
+        /*new Chart(ctx, {
           type: 'bar',
           data: {
             labels: ["27/11/2022",
@@ -57,7 +58,40 @@
               }
             }
           }
-        });
+        });*/
+
+
+
+        let chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        datasets: [{
+            data: [{
+                x: '13 .12 .2022 ',
+                y: 36
+            }, {
+                x: '16/12/2022 ',
+                y: 20
+            }, {
+                x: '27/12/2022 ',
+                y: 22
+            }]
+        }],
+    },
+    options: {
+        scales: {
+            x: {
+                min: '04/12/2022 ',
+                max:  '20/03/2023',
+            },
+            y: {
+              max :'100',
+            }
+        }   
+    }
+});
+
+
 
        
       
