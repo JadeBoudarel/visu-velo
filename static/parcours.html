@@ -1,61 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>parcours</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>parcours</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
+
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const existingData = {
+      datasets: [{
+        label: 'distance parcourue en Km',
+        data: [
+          {'x': '27/11/2022', 'y': '30'},
+          {'x': '04/12/2022', 'y': '36'},
+          {'x': '13/12/2022', 'y': '20'},
+          {'x': '16/12/2022', 'y': '22'},
+          {'x': '27/12/2022', 'y': '28'},
+          {'x': '08/01/2023', 'y': '20'},
+          {'x': '10/01/2023', 'y': '13'},
+          {'x': '12/01/2023', 'y': '18'},
+          {'x': '14/01/2023', 'y': '33'},
+          {'x': '18/01/2023', 'y': '13'},
+          {'x': '22/01/2023', 'y': '31'},
+          {'x': '25/01/2023', 'y': '18'},
+          {'x': '28/01/2023', 'y': '46'},
+          {'x': '02/02/2023', 'y': '14'},
+          {'x': '05/02/2023', 'y': '58'},
+          {'x': '14/02/2023', 'y': '10'},
+          {'x': '18/02/2023', 'y': '27'},
+          {'x': '21/02/2023', 'y': '3.4'},
+          {'x': '01/03/2023', 'y': '21.3'},
+          {'x': '08/03/2023', 'y': '20'},
+          {'x': '20/03/2023', 'y': '19'}
+        ],
+      }],
+    };
+
     
-    <div>
-        <canvas id="myChart"></canvas>
-      </div>
-      
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      
-      <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-      
-      
+    function completeData(existingData) {
+      const startDate = moment(existingData.datasets[0].data[0].x, 'DD/MM/YYYY');
+      const endDate = moment(existingData.datasets[0].data[existingData.datasets[0].data.length - 1].x, 'DD/MM/YYYY');
+      const currentDate = startDate.clone();
+      const newLabels = [];
+      const newData = [];
 
-      <script>
-        const ctx = $('#myChart');
+      while (currentDate.isSameOrBefore(endDate)) {
+        const formattedDate = currentDate.format('DD/MM/YYYY');
+        newLabels.push(formattedDate);
 
-        let chart = new Chart(ctx, {
-          type: 'line',
-        data: {
-            datasets: [{
-              label: 'distance parcourue en Km',
-                data: [
- {'x': '27/11/2022', 'y': '30'},
- {'x': '04/12/2022', 'y': '36'},
- {'x': '13/12/2022', 'y': '20'},
- {'x': '16/12/2022', 'y': '22'},
- {'x': '27/12/2022', 'y': '28'},
- {'x': '08/01/2023', 'y': '20'},
- {'x': '10/01/2023', 'y': '13'},
- {'x': '12/01/2023', 'y': '18'},
- {'x': '14/01/2023', 'y': '33'},
- {'x': '18/01/2023', 'y': '13'},
- {'x': '22/01/2023', 'y': '31'},
- {'x': '25/01/2023', 'y': '18'},
- {'x': '28/01/2023', 'y': '46'},
- {'x': '02/02/2023', 'y': '14'},
- {'x': '05/02/2023', 'y': '58'},
- {'x': '14/02/2023', 'y': '10'},
- {'x': '18/02/2023', 'y': '27'},
- {'x': '21/02/2023', 'y': '3.4'},
- {'x': '01/03/2023', 'y': '21.3'},
- {'x': '08/03/2023', 'y': '20'},
- {'x': '20/03/2023', 'y': '19'}
-                    
-                ],
-            }],
-        },
-        options: {
-      scales: {
-        x: {
-          
-          
+        const dataIndex = existingData.datasets[0].data.findIndex(item => item.x === formattedDate);
+        if (dataIndex !== -1) {
+          newData.push(existingData.datasets[0].data[dataIndex].y);
+        } else {
+          newData.push(null);
+        }
+
+        currentDate.add(1, 'day');
+      }
+
+      return {
+        labels: newLabels,
+        datasets: [{
+          label: existingData.datasets[0].label,
+          fill: false,
+          data: newData
+        }]
+      };
+    }
+
+    const completedData = completeData(existingData);
+
+    let chart = new Chart(ctx, {
+      type: 'bar',
+      data: completedData,
+      options: {
+        scales: {
+          xAxes: [{
+            type: "category", 
+            labels: completedData.labels 
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: 100
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Kilomètres'
+            }
+          }],
+          x: {
+
           title: {
             display: true,
             text: 'Date'
@@ -69,31 +114,9 @@
             text: 'Kilomètres',
           },
         },
-      },
-    },     
-       
-  });
-  
-        
-            
-    
-
-   
-
-
-      
-
-        
-      </script>
-
-      
-
-      
-      
-       
-      
-       
-
-
+        }
+      }
+    });
+  </script>
 </body>
 </html>
