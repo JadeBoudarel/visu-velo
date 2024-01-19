@@ -15,6 +15,7 @@
   </div>
 
   <script>
+    //rhi: ici tu dois changer cette ligne pour une ligne qui utilise jquery.
     const ctx = document.getElementById('myChart').getContext('2d');
 
     const existingData = {
@@ -46,6 +47,9 @@
       }],
     };
 
+
+    // rhi: Cette fonction va transformer les données pour y ajouter les dates manquantes.
+    // rhi: On va plutôt faire ça avec du python.
     
     function completeData(existingData) {
       const startDate = moment(existingData.datasets[0].data[0].x, 'DD/MM/YYYY');
@@ -78,7 +82,9 @@
       };
     }
 
+    //rhi: ici ça applique la fonction ...
     const completedData = completeData(existingData);
+    //rhi: et là je l'affiche dans la console et on voit ce que ça a fait.
     console.log(completedData)
 
     let chart = new Chart(ctx, {
