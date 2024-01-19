@@ -16,7 +16,7 @@
 
   <script>
     //rhi: ici tu dois changer cette ligne pour une ligne qui utilise jquery.
-    const ctx = document.getElementById('myChart').getContext('2d');
+    const ctx = $('#myChart')
 
     const existingData = {
       datasets: [{
@@ -92,20 +92,7 @@
       data: completedData,
       options: {
         scales: {
-          xAxes: [{
-            type: "category", 
-            labels: completedData.labels 
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              max: 100
-            },
-            scaleLabel: {
-              display: true,
-              labelString: 'Kilomètres'
-            }
-          }],
+        
           x: {
 
           title: {
