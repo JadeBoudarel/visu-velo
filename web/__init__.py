@@ -15,8 +15,8 @@ def create_app():
 
     @app.route("/")
     def home():
-        time = datetime.datetime.now()
-        return f"Hello user at {time}"
+
+        return render_template('index.html', title="Home")
 
     @app.route("/matplotlib")
     def velo():
