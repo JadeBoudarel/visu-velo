@@ -13,7 +13,11 @@ from bokeh.models import HoverTool, ColumnDataSource
 def create_app():
     app = Flask(__name__)
 
+
+
+
     @app.route("/")
+    @app.route("/index")
     def home():
 
         return render_template('index.html', title="Home")
@@ -135,6 +139,6 @@ def create_app():
         deniv = df["Deniv"].tolist()
         km = df["km"].tolist()
         print(df["date"])
-        return render_template("chartjs.html", dates=dates, deniv=deniv, km=km)
+        return render_template("chartjs.html",title="Graphique avec Chart.js", dates=dates, deniv=deniv, km=km)
 
     return app
