@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div id="content"></div>
+<div class="bg-light">
+  <canvas id="myChart"></canvas>
+</div>
+
+<script>
+
+  function draw_graph( data ){
+   const ctx = $('#myChart');
+
+  new Chart(ctx, {
+  type: 'bar',
+
+  data: {
+
+    datasets: [{
+      label: 'Distance parcourue en velo',
+      backgroundColor: '#FFB1C1',
+      data: data,
+      borderWidth: 1
+    }]
+  },
+  options: {
+        scales: {
+
+          x: {
+
+          title: {
+            display: true,
+            text: 'Date'
+          },
+        },
+        y: {
+          beginAtZero: true,
+          max: 100,
+          title: {
+            display: true,
+            text: 'Kilomètres',
+          },
+        },
+        }
+      }
+  });
+
+
+        const formattedData = JSON.stringify(data, null, 2);
+        $('#content').innerHTML = `<pre>${formattedData}</pre>`;
+  }
+
+ $( document ).ready(function() {
+    // Get json from local url, and call the draw_graph method with returned data
+    fetch('/velo_data')
+      .then( response => response.json() )
+      .then( draw_graph );
+});
+
+</script>
+{% endblock %}

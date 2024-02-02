@@ -3,7 +3,7 @@ import io
 import base64
 import pandas as pd
 import matplotlib.pyplot as plt
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.resources import INLINE
@@ -140,5 +140,25 @@ def create_app():
         km = df["km"].tolist()
         print(df["date"])
         return render_template("chartjs.html",title="Graphique avec Chart.js", dates=dates, deniv=deniv, km=km)
+
+    @app.route('/velo_data')
+    def velo_data():
+        csv_df = pd.read_csv("./parcours.csv", sep=';', index_col='date', parse_dates=True, dayfirst=True)
+        my_newindex = pd.date_range('2022-11-27', end='2023-03-25', freq='D')
+        csv_df_reindexed = csv_df.reindex(my_newindex, fill_value=0)
+
+        velo_datas = []
+
+        _index: pd.Timestamp
+        for _index, row in csv_df_reindexed.iterrows():
+            _date = _index.strftime("%Y-%m-%d")
+            my_line = {'x': _date, 'y': row['km']}
+            velo_datas.append(my_line)
+
+        return jsonify(velo_datas), 201
+
+    @app.route('/velo_plot')
+    def velo_plot():
+        return render_template(template_name_or_list='velo_plot.html', title='velo_plot')
 
     return app
